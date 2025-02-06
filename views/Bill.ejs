@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receipt</title>
+  <style>
+    /* Resetting and General Styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #FF9A8B, #FFC3A0);
+      color: #444;
+      padding: 20px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .logo h3 {
+      font-size: 26px;
+      font-family: 'Verdana', sans-serif;
+      color: #333;
+    }
+
+    .logo h4 {
+      font-size: 18px;
+      color: #555;
+    }
+
+    label {
+      font-size: 14px;
+      color: #333;
+      margin: 10px 0;
+      display: block;
+    }
+
+    table {
+      width: 80%;
+      margin: 20px 0;
+      border-collapse: collapse;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      font-size: 14px;
+      color: #444;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #FF6F61;
+      color: white;
+      font-size: 16px;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    h3, h5 {
+      font-size: 16px;
+      color: #333;
+      font-weight: normal;
+    }
+
+    h3 {
+      font-size: 20px;
+      color: #FF6F61;
+      margin-bottom: 10px;
+    }
+
+    .total {
+      font-weight: bold;
+    }
+
+    .customer-info, .billing-info {
+      width: 80%;
+      margin-top: 20px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .customer-info h3, .billing-info h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #FF6F61;
+    }
+
+    .customer-info h5, .billing-info h5 {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .customer-info {
+      background-color: #f9f9f9;
+    }
+
+    .billing-info {
+      background-color: #f1f1f1;
+    }
+
+    button {
+      padding: 12px 30px;
+      background-color: #FFC3A0;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    button:hover {
+      background-color: #FF5A4E;
+    }
+
+    p {
+      font-size: 14px;
+      color: #777;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+<body id="content-to-pdf">
+  
+  <div class="logo">
+    <img src="https://via.placeholder.com/150" alt="Logo"> <!-- Random placeholder logo -->
+    <h3>Ankush-Mega-Mart</h3>
+    <h4>Thank you for shopping with us and for your order.</h4>
+  </div>
+
+  <div>
+    <label id="uid"></label>
+    <label id="date"></label>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Sub-Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(let key in body) { %> 
+        <% if(key.startsWith('quantity')) { %> 
+          <%
+            const index = key.replace('quantity','');
+            const item = 'item' + index;
+            const price = 'price' + index;
+          %>
+          <tr>
+            <td><%= body[item] %></td>
+            <td><%= body[key] %></td>
+            <td><%= body[price] %></td>
+          </tr>
+        <% } %>
+      <% } %>
+    </tbody>
+  </table>
+
+  <div style="display: flex;gap: 2rem;">
+    <h5>Subtotal: <%= tq %></h5>
+    <h5>GST & TAX: 10%</h5>
+    <h3 class="total">Grand Total: <%= net %></h3>
+  </div>
+
+  <div class="customer-info">
+    <h3>Customer Information</h3>
+    <h5>Name : <%= body['c-name'] %></h5>
+    <h5>Email :<%= body['c-email'] %></h5>
+    <h5>Mob-No :<%= body['c-no'] %></h5>
+  </div>
+
+  <div class="billing-info">
+    <h3>BILLING INFORMATION</h3>
+    <h5>Ankush-Mega-Mart</h5>
+    <h5>Pardesi-pura</h5>
+    <h5>Indore</h5>
+    <h5>Madhya Pradesh</h5>
+    <h5>9878387870</h5>
+  </div>
+
+
+
+  <form >
+    <input type="email" name="email" id="" hidden value="<%= body['c-email'] %>" />
+   
+  </form>
+  <button type="submit" id="generate-pdf">Send PDF</button>
+  <p>Have a nice day!</p>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+    
+  <script>
+    let d = document.getElementById('date');
+    let ob = new Date();
+    d.innerText = `Date: ${ob.toLocaleDateString()}`;
+
+    let uid = document.getElementById('uid');
+    uid.innerText = "User ID: " + ob.getTime();
+
+    document.getElementById('generate-pdf').addEventListener('click', function () {
+      const element = document.getElementById('content-to-pdf');
+
+      // Use html2pdf to capture the entire webpage and create a PDF
+      html2pdf()
+        .from(element)
+        .set({
+          html2canvas: {
+            scrollY: 0,  // Ensures it starts from the top of the page, capturing everything
+            scale: 2,    // Improve resolution for better quality
+            width: window.innerWidth, // Make sure it captures the full page width
+            height: document.body.scrollHeight, // Ensure it captures full page height
+          },
+          jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait',
+          }
+        })
+        .save('generated-file.pdf');
+    });
+  </script>
+
+</body>
+</html>

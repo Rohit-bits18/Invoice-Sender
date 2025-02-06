@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing Form</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #FF9A8B, #FFC3A0);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            font-family: 'Verdana', sans-serif;
+        }
+
+        .input, .goods {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: #FF6F61;
+        }
+
+        button {
+            background-color:  #FFC3A0;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #FF5A4E;
+        }
+
+        #amount-filds {
+            padding-left: 0;
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        li {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            justify-content: space-between;
+        }
+
+        li input {
+            width: 30%;
+        }
+
+        .goods {
+            text-align: left;
+        }
+
+        p {
+            font-size: 14px;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        #date, #uid {
+            font-size: 16px;
+            font-weight: bold;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+
+    <form action="/bill" method="post">
+        <h1>Ankush-Mega-Mart</h1>
+        <p id="uid"></p>
+        <div class="input">
+            <label for="c-name">Customer Name:</label>
+            <input autocomplete="off" required type="text" id="c-name" name="c-name">
+        </div>
+
+        <div class="input">
+            <label for="c-email">Customer Email:</label>
+            <input autocomplete="off" required type="email" id="c-email" name="c-email">
+        </div>
+
+        <div class="input">
+            <label for="c-no">Customer Number:</label>
+            <input autocomplete="off" required type="text" id="c-no" name="c-no">
+        </div>
+
+        <div class="goods">
+            <label for="goods">Purchased Goods:</label>
+            <button id="add" type="button">Add fields</button>
+        </div>
+
+        <div>
+           
+            <ol id="amount-filds"></ol>
+        </div>
+
+        <p id="date"></p>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const add = document.getElementById('add');
+        const ol = document.getElementById('amount-filds');
+        let count = 0;
+
+        let d = document.getElementById('date');
+        let ob = new Date();
+        d.innerText = `Date: ${ob.toLocaleDateString()}`;
+        
+        let uid = document.getElementById('uid');
+        uid.innerText = "User ID: " + ob.getTime();
+
+        add.addEventListener('click', (e) => {
+            e.preventDefault();
+            count++;
+
+            let li = document.createElement('li');
+            let item = document.createElement('input');
+            item.setAttribute('name', `item${count}`);
+            item.setAttribute('placeholder', 'Item Name');
+            item.setAttribute('required', 'true');
+            item.setAttribute('autocomplete', 'off');
+
+            let quant = document.createElement('input');
+            quant.setAttribute('name', `quantity${count}`);
+            quant.setAttribute('placeholder', 'Quantity');
+            quant.setAttribute('required', 'true');
+            quant.setAttribute('autocomplete', 'off');
+
+            let price = document.createElement('input');
+            price.setAttribute('name', `price${count}`);
+            price.setAttribute('placeholder', 'Price');
+            price.setAttribute('required', 'true');
+            price.setAttribute('autocomplete', 'off');
+
+            li.appendChild(item);
+            li.appendChild(quant);
+            li.appendChild(price);
+            ol.appendChild(li);
+        });
+    </script>
+    
+</body>
+</html>
