@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Receipt</title>
   <style>
-    /* Resetting and General Styling */
+  
     * {
       margin: 0;
       padding: 0;
@@ -155,8 +155,6 @@
     }
 
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 </head>
 <body id="content-to-pdf">
   
@@ -221,15 +219,14 @@
 
 
 
-  <form >
+  <form action="/sendmail" method="post">
     <input type="email" name="email" id="" hidden value="<%= body['c-email'] %>" />
-   
+    <button type="submit" >Send PDF</button>
   </form>
-  <button type="submit" id="generate-pdf">Send PDF</button>
+ 
   <p>Have a nice day!</p>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
-    
+ 
   <script>
     let d = document.getElementById('date');
     let ob = new Date();
@@ -238,28 +235,15 @@
     let uid = document.getElementById('uid');
     uid.innerText = "User ID: " + ob.getTime();
 
-    document.getElementById('generate-pdf').addEventListener('click', function () {
-      const element = document.getElementById('content-to-pdf');
-
-      // Use html2pdf to capture the entire webpage and create a PDF
-      html2pdf()
-        .from(element)
-        .set({
-          html2canvas: {
-            scrollY: 0,  // Ensures it starts from the top of the page, capturing everything
-            scale: 2,    // Improve resolution for better quality
-            width: window.innerWidth, // Make sure it captures the full page width
-            height: document.body.scrollHeight, // Ensure it captures full page height
-          },
-          jsPDF: {
-            unit: 'mm',
-            format: 'a4',
-            orientation: 'portrait',
-          }
-        })
-        .save('generated-file.pdf');
-    });
+   
   </script>
 
 </body>
 </html>
+
+
+
+
+
+
+

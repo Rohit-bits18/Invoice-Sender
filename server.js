@@ -16,7 +16,6 @@ app.get('/home',(req,res)=>{
 })
 
 
-// app.use('/pdf',take_shot);
 app.use('/sendmail',sendmail)
 app.use('/bill',bill)
 

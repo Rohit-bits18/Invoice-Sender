@@ -24,8 +24,8 @@ async function sendmail(req,res){
             subject:"I am sending Mail",
             attachments:[
                 {
-                    filename:'invoice2.pdf',
-                    path:path.join(__dirname,'../invoice2.pdf'),
+                    filename:'Your-invoice.pdf',
+                    path:path.join(__dirname,'../Your-invoice.pdf'),
                 }
             ]
         }
