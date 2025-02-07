@@ -3,7 +3,7 @@ const app = express();
 require('dotenv').config();
 const {sendmail} = require('./controller/sendmail')
 const path = require('path');
-const {take_shot} = require('./controller/Genpdf')
+
 
 const {bill} = require('./controller/GenBill')
 app.use(express.urlencoded({extended:false}));
